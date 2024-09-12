@@ -92,4 +92,20 @@ public class RoleDAOImpl implements RoleDAO {
             System.out.println("Error deleting role: " + e.getMessage());
         }
     }
+
+    @Override
+    public int getRoleIdByName(String name) {
+        String sql = "SELECT id FROM Role WHERE name = ?";
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting role ID by name: " + e.getMessage());
+        }
+        return -1; // Return -1 or some other indicator that the role was not found
+    }
 }

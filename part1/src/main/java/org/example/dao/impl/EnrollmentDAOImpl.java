@@ -99,4 +99,33 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
             System.out.println("Error deleting enrollment: " + e.getMessage());
         }
     }
+
+    @Override
+    public List<Enrollment> getEnrollmentByStudentId(int studentId) {
+        String sql = "SELECT course_id, grade FROM Enrollment WHERE student_id = ?";
+        List<Enrollment> enrollments = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            pstmt.setInt(1, studentId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int courseId = rs.getInt("course_id");
+                int grade = rs.getInt("grade");
+
+                Enrollment enrollment = new Enrollment();
+                enrollment.setCourseId(courseId);
+                enrollment.setGrade(grade);
+
+                enrollments.add(enrollment);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error retrieving enrollments for student ID: " + e.getMessage());
+        }
+
+        return enrollments;
+    }
 }

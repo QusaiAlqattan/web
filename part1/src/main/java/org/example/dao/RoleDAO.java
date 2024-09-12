@@ -10,4 +10,5 @@ public interface RoleDAO {
     List<Role> getAllRoles();                      // Retrieve all roles
     void updateRole(Role role);                    // Update an existing role
     void deleteRole(int id);                       // Delete a role by its ID
+    int getRoleIdByName(String name);
 }

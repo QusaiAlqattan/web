@@ -1,8 +1,7 @@
 package org.example.mainServer.ClientHandler;
 
 import org.example.mainServer.ClientHandler.ClientHandlerToolBox.*;
-import org.example.mainServer.ClientHandler.RoleHandler.*;
-
+import org.example.mainServer.ClientHandler.RoleHandlers.*;
 import java.sql.*;
 import java.net.*;
 import java.io.*;
@@ -47,18 +46,21 @@ public class ClientHandler extends Thread {
             }
 
             switch (role){
-                case "admin":
-                    AdminHandler.AdminHandler();
-                case "teacher":
-                    StudentHandler.StudentHandler();
-                case "student":
-                    StudentHandler.StudentHandler();
+                case "Admin":
+                    AdminHandler.handle(in ,out);
+                    break;
+                case "Teacher":
+                    TeacherHandler.handle(in ,out);
+                    break;
+                case "Student":
+                    StudentHandler.handle(in ,out);
+                    break;
                 default:
-                    System.out.println(role);
+                    NoRoleHandler.handle(in ,out);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }finally {
             // Close resources like socket and statement
             try {
                 if (socket != null) socket.close();

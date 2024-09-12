@@ -1,5 +1,7 @@
 package org.example.client;
 
+import org.example.client.ClientToolBox.*;
+
 import java.sql.*;
 import java.net.*;
 import java.io.*;
@@ -31,7 +33,9 @@ public class Client{
 
             out.flush();
 
-            System.out.println(socket.getInetAddress());
+            // start flow
+            ClientToolBox.flow(in , out, scanner);
+
         }catch (Exception e){
             System.out.println(e);
         }
