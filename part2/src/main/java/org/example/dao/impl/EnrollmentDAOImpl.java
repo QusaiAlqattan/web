@@ -5,7 +5,9 @@ import org.example.models.Enrollment;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EnrollmentDAOImpl implements EnrollmentDAO {
     private final String url;
@@ -129,5 +131,28 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
         }
 
         return enrollments;
+    }
+
+    @Override
+    public Map<String, Double> getGradeStatisticsByStudentId(int studentId) {
+        Map<String, Double> gradeStats = new HashMap<>();
+        String sql = "SELECT MAX(grade) AS maxGrade, MIN(grade) AS minGrade, AVG(grade) AS avgGrade " +
+                "FROM Enrollment WHERE student_id = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password);
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, studentId);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    gradeStats.put("maxGrade", rs.getDouble("maxGrade"));
+                    gradeStats.put("minGrade", rs.getDouble("minGrade"));
+                    gradeStats.put("avgGrade", rs.getDouble("avgGrade"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Handle exception properly in production
+        }
+
+        return gradeStats;
     }
 }

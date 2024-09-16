@@ -14,47 +14,53 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Full height for the page */
+            height: 100vh;
             margin: 0;
             padding: 20px;
-            text-align: center; /* Center text for a clean look */
+            text-align: center;
         }
 
         h2 {
-            margin-bottom: 30px; /* Space below the title */
-            font-size: 2.5em; /* Size of the heading */
+            margin-bottom: 30px;
+            font-size: 2.5em;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         table {
-            width: 80%; /* Responsive width for the table */
-            border-collapse: collapse; /* Collapse borders for cleaner look */
-            margin: 0 auto; /* Center table */
-            background: rgba(0, 0, 0, 0.7); /* Background for table */
-            border-radius: 10px; /* Rounded corners for table */
-            overflow: hidden; /* Hide overflow for rounded corners */
+            width: 80%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
         th, td {
-            padding: 12px; /* Padding for table cells */
-            text-align: left; /* Align text to the left */
-            border-bottom: 1px solid #ddd; /* Bottom border for rows */
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: #ff4081; /* Header background color */
-            color: white; /* Header text color */
-            font-size: 1.2em; /* Font size for header */
+            background-color: #ff4081;
+            color: white;
+            font-size: 1.2em;
         }
 
         tr:hover {
-            background-color: rgba(255, 255, 255, 0.1); /* Hover effect for rows */
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         p {
-            font-size: 1.2em; /* Font size for the paragraph */
-            margin: 20px 0; /* Space above and below the paragraph */
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+
+        .stats {
+            margin-top: 30px;
+            font-size: 1.3em;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
@@ -85,6 +91,16 @@
 <!-- Message if no enrollments are found -->
 <c:if test="${empty enrollmentDetails}">
     <p>No courses found for the student.</p>
+</c:if>
+
+<!-- Display grade statistics if available -->
+<c:if test="${not empty gradeStats}">
+    <div class="stats">
+        <p><strong>Grade Statistics:</strong></p>
+        <p>Max Grade: ${gradeStats.maxGrade}</p>
+        <p>Min Grade: ${gradeStats.minGrade}</p>
+        <p>Average Grade: ${gradeStats.avgGrade}</p>
+    </div>
 </c:if>
 </body>
 </html>

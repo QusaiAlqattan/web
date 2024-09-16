@@ -72,9 +72,6 @@ public class StudentServlet extends HttpServlet {
             List<Enrollment> currentUserEnrollments = enrollmentDAO.getEnrollmentByStudentId(currentUserId);
             List<Map<String, Object>> enrollmentDetails = new ArrayList<>();
 
-            System.out.println("currentUserId" + currentUserId);
-            System.out.println("currentUserEnrollments" + currentUserEnrollments);
-
             for (Enrollment enrollment : currentUserEnrollments) {
                 String courseName = courseDAO.getCourseNameById(enrollment.getCourseId());
 
@@ -83,14 +80,13 @@ public class StudentServlet extends HttpServlet {
                 enrollmentMap.put("grade", enrollment.getGrade());  // Add the grade
 
                 enrollmentDetails.add(enrollmentMap);  // Add the map to the list
-
-                System.out.println("courseName" + courseName);
-                System.out.println("grade" + enrollment.getGrade());
             }
 
+            Map<String, Double> gradeStats = enrollmentDAO.getGradeStatisticsByStudentId(currentUserId);
+
             // Pass the list to the JSP
-            System.out.println("enrollmentDetails" + enrollmentDetails);
             request.setAttribute("enrollmentDetails", enrollmentDetails);
+            request.setAttribute("gradeStats", gradeStats);
             request.getRequestDispatcher("/student.jsp").forward(request, response);
 
         } catch (Exception e) {

@@ -2,7 +2,7 @@ package org.example.dao;
 
 import org.example.models.Enrollment;
 
-import java.util.List;
+import java.util.*;
 
 public interface EnrollmentDAO {
     void addEnrollment(Enrollment enrollment);      // Add a new enrollment
@@ -11,4 +11,5 @@ public interface EnrollmentDAO {
     void updateEnrollment(Enrollment enrollment);   // Update an existing enrollment
     void deleteEnrollment(int studentId, int courseId); // Delete an enrollment
     List<Enrollment> getEnrollmentByStudentId(int studentId);
+    Map<String, Double> getGradeStatisticsByStudentId(int studentId);
 }
