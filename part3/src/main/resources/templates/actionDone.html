@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Action Completed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        a {
+            color: #ff4081; /* Button color */
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease; /* Smooth transition for hover effect */
+        }
+        a:hover {
+            color: #f50057; /* Button hover color */
+        }
+    </style>
+</head>
+<body>
+<h2>Action Completed</h2>
+<div class="message" th:text="${message}"></div>
+</body>
+</html>
