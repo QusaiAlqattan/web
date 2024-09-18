@@ -43,10 +43,10 @@ public class LoginServlet extends HttpServlet {
                 String redirectUrl;
                 switch (role) {
                     case "Admin":
-                        redirectUrl = "/admin.jsp";
+                        redirectUrl = "/admin";
                         break;
                     case "Teacher":
-                        redirectUrl = "/teacher.jsp";
+                        redirectUrl = "/teacher";
                         break;
                     case "Student":
                         redirectUrl = "/student";

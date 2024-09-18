@@ -33,6 +33,11 @@ public class TeacherServlet extends HttpServlet {
     }
 
     @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/teacher.jsp").forward(request, response);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String studentId = request.getParameter("studentID");
         String courseId = request.getParameter("courseID");
