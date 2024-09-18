@@ -1,22 +1,13 @@
 package org.example.service;
 
-import org.example.dao.CourseDAO;
-import org.example.dao.EnrollmentDAO;
-import org.example.dao.RoleDAO;
-import org.example.dao.UserDAO;
-import org.example.dao.impl.CourseDAOImpl;
-import org.example.dao.impl.EnrollmentDAOImpl;
-import org.example.dao.impl.RoleDAOImpl;
-import org.example.dao.impl.UserDAOImpl;
-import org.example.models.Course;
-import org.example.models.Enrollment;
-import org.example.models.Role;
-import org.example.models.User;
+import org.example.dao.*;
+import org.example.dao.impl.*;
+import org.example.models.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import static org.example.mainServer.ClientHandler.RoleHandlers.LoginHandler.hashPassword;
+import static org.example.service.LoginHandler.hashPassword;
 
 public abstract class AdminHandler {
     public static void createUser(String username, String role) throws NoSuchAlgorithmException{

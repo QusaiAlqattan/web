@@ -1,6 +1,6 @@
 package org.example.servlets;
 
-import org.example.DataBaseManager;
+import org.example.utils.DataBaseManager;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -19,13 +19,13 @@ import static org.example.service.TeacherHandler.editGrades;
 public class TeacherServlet extends HttpServlet {
 
     private Statement stmt;
-    private DataBaseManager dbManager;
+    private DataBaseManager databaseManager;
 
     @Override
     public void init() throws ServletException {
         try {
-            dbManager = new DataBaseManager();
-            Connection connection = dbManager.getConnection();
+            databaseManager = new DataBaseManager();
+            Connection connection = databaseManager.getConnection();
             stmt = connection.createStatement();
         } catch (SQLException e) {
             throw new ServletException("Failed to initialize database connection.", e);
@@ -34,15 +34,15 @@ public class TeacherServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String studentID = request.getParameter("studentID");
-        String courseID = request.getParameter("courseID");
+        String studentId = request.getParameter("studentID");
+        String courseId = request.getParameter("courseID");
         String grade = request.getParameter("Grade");
 
         // Perform the action (e.g., edit the grade)
-        editGrades(studentID, courseID, grade);
+        editGrades(studentId, courseId, grade);
 
         try {
-            dbManager.closeConnection();
+            databaseManager.closeConnection();
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,9 +7,9 @@ import java.sql.SQLException;
 public class DataBaseManager {
 
     // Database connection details
-    private final String jdbcUrl = "jdbc:mysql://localhost:3306/mydb?useTimezone=true&serverTimezone=UTC";
-    private final String jdbcUsername = "root";
-    private final String jdbcPassword = "12345";
+    private final String url = "jdbc:mysql://localhost:3306/mydb?useTimezone=true&serverTimezone=UTC";
+    private final String username = "root";
+    private final String password = "12345";
 
     private Connection connection;
 
@@ -19,7 +19,7 @@ public class DataBaseManager {
             try {
                 // Establish connection
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
+                connection = DriverManager.getConnection(url, username, password);
             } catch (SQLException e) {
                 throw new SQLException("Failed to connect to the database", e);
             } catch (ClassNotFoundException e) {

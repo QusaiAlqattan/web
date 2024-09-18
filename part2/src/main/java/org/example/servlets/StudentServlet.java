@@ -2,40 +2,27 @@ package org.example.servlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.example.DataBaseManager;
-import org.example.dao.CourseDAO;
-import org.example.dao.EnrollmentDAO;
-import org.example.dao.UserDAO;
-import org.example.dao.impl.CourseDAOImpl;
-import org.example.dao.impl.EnrollmentDAOImpl;
-import org.example.dao.impl.UserDAOImpl;
-import org.example.models.Enrollment;
-import org.example.models.User;
+import jakarta.servlet.http.*;
+import org.example.utils.DataBaseManager;
+import org.example.dao.*;
+import org.example.dao.impl.*;
+import org.example.models.*;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 @WebServlet("/student")
 public class StudentServlet extends HttpServlet {
 
     private Statement stmt;
-    private DataBaseManager dbManager;
+    private DataBaseManager databaseManager;
 
     @Override
     public void init() throws ServletException {
         try {
-            dbManager = new DataBaseManager();
-            Connection connection = dbManager.getConnection();
+            databaseManager = new DataBaseManager();
+            Connection connection = databaseManager.getConnection();
             stmt = connection.createStatement();
         } catch (SQLException e) {
             throw new ServletException("Failed to initialize database connection.", e);
@@ -47,8 +34,8 @@ public class StudentServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session == null || session.getAttribute("username") == null) {
-            response.sendRedirect("login.jsp");
-            return;  // Stop further processing
+            response.sendRedirect("index.jsp");
+            return;
         }
 
         String username = (String) session.getAttribute("username");
@@ -62,7 +49,7 @@ public class StudentServlet extends HttpServlet {
             // Fetch current user
             User currentUser = userDAO.getUserByUsername(username);
             if (currentUser == null) {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("index.jsp");
                 return;
             }
 
@@ -76,10 +63,10 @@ public class StudentServlet extends HttpServlet {
                 String courseName = courseDAO.getCourseNameById(enrollment.getCourseId());
 
                 Map<String, Object> enrollmentMap = new HashMap<>();
-                enrollmentMap.put("courseName", courseName);  // Add the course name
-                enrollmentMap.put("grade", enrollment.getGrade());  // Add the grade
+                enrollmentMap.put("courseName", courseName);
+                enrollmentMap.put("grade", enrollment.getGrade());
 
-                enrollmentDetails.add(enrollmentMap);  // Add the map to the list
+                enrollmentDetails.add(enrollmentMap);
             }
 
             Map<String, Double> gradeStats = enrollmentDAO.getGradeStatisticsByStudentId(currentUserId);
@@ -97,8 +84,8 @@ public class StudentServlet extends HttpServlet {
     @Override
     public void destroy() {
         try {
-            if (dbManager != null) {
-                dbManager.closeConnection();
+            if (databaseManager != null) {
+                databaseManager.closeConnection();
             }
         } catch (SQLException e) {
             e.printStackTrace();

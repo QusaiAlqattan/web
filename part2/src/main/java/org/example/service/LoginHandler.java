@@ -1,10 +1,7 @@
-package org.example.mainServer.ClientHandler.RoleHandlers;
+package org.example.service;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.security.*;
+import java.sql.*;
 
 public abstract class LoginHandler {
     public static boolean login(String username, String hashedPassword, Statement stmt) throws SQLException {
